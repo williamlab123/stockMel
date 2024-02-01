@@ -1,4 +1,6 @@
-<%= form_with url: '/dashboard/sales', method: :get do %>
-  <%= select_tag 'month', options_for_select(Date::MONTHNAMES.compact.each_with_index.map { |name, i| [name, i+1] }) %>
-  <%= submit_tag 'Submit' %>
+<%= form_with url: compare_months_dashboard_path, method: :get do %>
+  <%= select_tag :month1, options_for_select((1..12)) %>
+  <%= select_tag :month2, options_for_select((1..12)) %>
+  <%= select_tag :year, options_for_select((2010..Date.today.year)) %>
+  <%= submit_tag 'Compare' %>
 <% end %>

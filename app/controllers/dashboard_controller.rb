@@ -10,11 +10,27 @@ class DashboardController < ApplicationController
     end.to_h
   end
 
-  def compare_months;
- end
+  def compare_months
+    month1 = params[:month1].to_i
+    month2 = params[:month2].to_i
+    year = params[:year].to_i
+
+    unless (1..12).include?(month1) && (1..12).include?(month2) && year.positive?
+      flash[:error] = 'Invalid month or year selected.'
+      # redirect_to dashboard_index_path
+      return
+    end
+
+    sales_totals_by_month = sales
+
+    total_price_month1, total_quantity_month1 = sales_totals_by_month[Date.new(year, month1)] || [0, 0]
+    total_price_month2, total_quantity_month2 = sales_totals_by_month[Date.new(year, month2)] || [0, 0]
+
+    @price_difference = total_price_month2 - total_price_month1
+    @quantity_difference = total_quantity_month2 - total_quantity_month1
+  end
 
   def index; end
 
-  def show
-  end
+  def show; end
 end
